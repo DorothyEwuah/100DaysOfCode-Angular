@@ -9,9 +9,11 @@ export class MediaItemComponent {
   @Input() mediaItem;
   @Output() delete = new EventEmitter();
 
+
   onDelete(){
     console.log("On Delete clicked");
     this.delete.emit(this.mediaItem);
   }
+
  
 }
