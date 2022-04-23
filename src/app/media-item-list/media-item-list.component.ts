@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MediaItemService } from '../services/media-item-service';
 
 @Component({
   selector: 'app-media-item-list',
@@ -6,58 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./media-item-list.component.css']
 })
 export class MediaItemListComponent implements OnInit {
+  mediaItems;
 
-  constructor() { }
+  constructor(private mediaItemService: MediaItemService) { }
 
   ngOnInit() {
+    this.mediaItems= this.mediaItemService.get();
   }
 
-  mediaItems = [
-    {
-      id: 1,
-      name: "Firebug",
-      medium: "Series",
-      category: "Science Fiction",
-      year: 2010,
-      watchedOn: 1457166565384,
-      isFavorite: false,
-    },
-    {
-      id: 2,
-      name: "The Small Tall",
-      medium: "Movies",
-      category: "SitComs",
-      year: 2010,
-      watchedOn: 1457166565384,
-      isFavorite: false,
-    },
-    {
-      id: 3,
-      name: "Oliver Twist",
-      medium: "Telenovella",
-      category: "Romance",
-      year: 2022,
-      watchedOn: 1457166565384,
-      isFavorite: true,
-    },
-    {
-      id: 4,
-      name: "You Again",
-      medium: "Series",
-      category: "SitComs",
-      year: 2010,
-      watchedOn: 1457166565384,
-      isFavorite: false,
-    },
-    {
-      id: 5,
-      name: "Handsome Stranger",
-      medium: "Movies",
-      category: "SitComs",
-      year: 2011,
-      watchedOn: 1457166565384,
-      isFavorite: true,
-    }
-  ];
-  onMediaItemDelete(mediaItem) { }
+  onMediaItemDelete(mediaItem) {
+    this.mediaItemService.delete(mediaItem);
+   }
 }

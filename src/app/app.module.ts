@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MediaItemComponent } from './mw-media-item/media-item.component';
 import { MediaItemFormComponent } from './media-item-form/media-item-form.component';
 import { MediaItemListComponent } from './media-item-list/media-item-list.component';
+import { lookupListToken, lookupLists } from './services/providers';
 
 @NgModule({
   imports: [
@@ -24,6 +25,11 @@ import { MediaItemListComponent } from './media-item-list/media-item-list.compon
   ],
   bootstrap: [
     AppComponent
+  ],
+  providers: [
+    {
+      provide: lookupListToken, useValue: lookupLists
+    }
   ]
 })
 export class AppModule {}
