@@ -1,17 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-@Component({
-  selector: 'app-media-item-list',
-  templateUrl: './media-item-list.component.html',
-  styleUrls: ['./media-item-list.component.css']
+@Injectable({
+    providedIn: 'root'
 })
-export class MediaItemListComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class MediaItemService {
   mediaItems = [
     {
       id: 1,
@@ -57,7 +50,21 @@ export class MediaItemListComponent implements OnInit {
       year: 2011,
       watchedOn: 1457166565384,
       isFavorite: true,
-    }
+    },
   ];
-  onMediaItemDelete(mediaItem) { }
+
+  get() {
+    return this.mediaItems;
+  }
+
+  add(mediaItem) {
+    this.mediaItems.push(mediaItem);
+  }
+  delete(mediaItem) {
+    const index = this.mediaItems.indexOf(mediaItem);
+    if (index >=0){
+    this.mediaItems.splice(index, 1);
+        
+    }
+  }
 }
