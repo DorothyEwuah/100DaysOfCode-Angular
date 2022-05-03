@@ -1,6 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
+import { throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -8,27 +9,38 @@ import { map } from "rxjs/operators";
 export class MediaItemService {
   constructor(private http: HttpClient) {}
 
-  get(medium) {
+  get(medium: string) {
     const getOptions = {
-      params: {medium}
-    }
+      params: { medium },
+    };
     return this.http.get<MediaItemsResponse>("mediaItems", getOptions).pipe(
-      map((response) => {
+      map((response: MediaItemsResponse) => {
+        console.log(response.mediaItems);
         return response.mediaItems;
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
-  add(mediaItem) {
+  add(mediaItem: MediaItem) {
     // this.mediaItems.push(mediaItem);
-    return this.http.post('mediaitems', mediaItem)
+    return this.http
+      .post("mediaitems", mediaItem)
+      .pipe(catchError(this.handleError));
   }
-  delete(mediaItem) {
+  delete(mediaItem: MediaItem) {
     // const index = this.mediaItems.indexOf(mediaItem);
     // if (index >= 0) {
     //   this.mediaItems.splice(index, 1);
     // }
-    return this.http.delete(`mediaitems/${mediaItem.id}`);
+    return this.http
+      .delete(`mediaitems/${mediaItem.id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error(error.message);
+    return throwError("A data error occurred, please try again.");
   }
 }
 
